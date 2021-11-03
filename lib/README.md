@@ -60,46 +60,43 @@ After processing all the operations, the machine returns the topmost value from 
 The machine processes 20-bit unsigned integers (numbers from 0 to 2 - 1). An over..ow in addition or under..ow in subtraction causes an error.
 The machine also reports an error when it tries to perform an operation that expects more numbers on the stack than the stack actually contains.
 Also, if, after performing all the operations, the stack is empty, the machine reports an error.
+
 For example, given a string "4 5 6 - 7 +", the machine performs the following operations:
-operation | comment | stack
-
----
-
-          |         | [empty]
-
-"4" | push 4 | 4
-"5" | push 5 | 4, 5
-"6" | push 6 | 4, 5, 6
-"-" | subtract 5 from 6 | 4, 1
-"7" | push 7 | 4, 1, 7
-"+" | add 1 and 7 | 4, 8
+<pre>
+operation | comment           | stack
+          |                   | [empty]
+      "4" | push 4            | 4
+      "5" | push 5            | 4, 5
+      "6" | push 6            | 4, 5, 6
+      "-" | subtract 5 from 6 | 4, 1
+      "7" | push 7            | 4, 1, 7
+      "+" | add 1 and 7       | 4, 8
+</pre>
 Finally, the machine will return 8.
 
 Given a string "13 DUP 4 POP 5 DUP + DUP + -", the machine performs the following operations:
-operation | comment | stack
-
----
-
-      |              | [empty]
-
-"13" | push 13 | 13
-"DUP" | duplicate 13 | 13, 13
-"4" | push 4 | 13, 13, 4
-"POP" | pop 4 | 13, 13
-"5" | push 5 | 13, 13, 5
-"DUP" | duplicate 5 | 13, 13, 5, 5
-"+" | add 5 and 5 | 13, 13, 10
-"DUP" | duplicate 10 | 13, 13, 10, 10
-"+" | add 10 and 10| 13, 13, 20
-"-" | subtract 13 from 20 | 13, 7
+<pre>
+operation | comment              | stack
+          |                      | [empty]
+     "13" | push 13              | 13
+    "DUP" | duplicate 13         | 13, 13
+      "4" | push 4               | 13, 13, 4
+    "POP" | pop 4                | 13, 13
+      "5" | push 5               | 13, 13, 5
+    "DUP" | duplicate 5          | 13, 13, 5, 5
+      "+" | add 5 and 5          | 13, 13, 10
+    "DUP" | duplicate 10         | 13, 13, 10, 10
+      "+" | add 10 and 10        | 13, 13, 20
+      "-" | subtract 13 from 20  | 13, 7
+</pre>
+      
 Finally, the machine will return 7.
 
 Given a string "5 6 + -", the machine reports an error. After the addition, there is only one number on the stack and the subtraction operation expects two.
 
 Given a string "3 DUP 5 - -", the machine reports an error. The second subtraction yields a negative result.
 
-Write a function:
-def solution(S)
+Write a function: def solution(S)
 
 that, given a string S containing a sequence of operations for the word machine, returns the result the machine would return after processing the operations. The function should return -1 if the machine would report an error while processing the operations.
 Examples:
